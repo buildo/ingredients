@@ -1,6 +1,8 @@
 # Ingredients Logging
 An unopinionated, lightweight and flexible macro-based logging library
 
+![](http://i.imgur.com/P5oynmA.jpg)
+
 ## Prerequisites
 
 - Scala 2.11
@@ -32,10 +34,10 @@ write a log entry
 
     def write(name: String, logMessage: LogMessage): Unit
 
-In order to provide a custom `Transport` you only have to mix in the Transport
-trait and define the above method.
+In order to provide a custom `Transport` you have to extend the `Transport` trait
+and provide an implementation for the above method.
 
-Ingredients comes with a console log implementation, which can use as a reference
+Ingredients comes with a console log implementation, which you can use as a reference
 
     class Console extends Transport {
       private val curTimeFormat = new SimpleDateFormat("HH:mm")
