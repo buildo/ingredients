@@ -24,7 +24,7 @@ object Logger {
   def apply(
       name: String,
       transports: Seq[Transport],
-      isEnabled: Level => Boolean): Logger =
+      isEnabled: PartialFunction[Level, Boolean]): Logger =
     new Logger(new UnderlyingImpl(name, transports, isEnabled))
 
   def nameOf[T: c.WeakTypeTag](c: Context) : c.Expr[String] = {

@@ -8,11 +8,17 @@ private object LoggerMacro {
 
   type LoggerContext = Context
 
+  // FIXME: this should be called directly instead of being a quasi-quote
+  def isEnabledDefault(c: LoggerContext) = {
+    import c.universe._
+    q"{ x: Level => false }"
+  }
+
   def errorMessage(c: LoggerContext)(message: c.Expr[String]) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     c.Expr[Unit] {
-      q"if ($underlying.isEnabled(io.buildo.ingredients.logging.Level.Error)) $underlying.write(io.buildo.ingredients.logging.Level.Error, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line})"
+      q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Error, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Error, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line})"
     }
   }
 
@@ -20,7 +26,7 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     c.Expr[Unit] {
-      q"if ($underlying.isEnabled(io.buildo.ingredients.logging.Level.Error)) $underlying.write(io.buildo.ingredients.logging.Level.Error, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line}, $cause)"
+      q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Error, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Error, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line}, $cause)"
     }
   }
 
@@ -28,7 +34,7 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     c.Expr[Unit] {
-      q"if ($underlying.isEnabled(io.buildo.ingredients.logging.Level.Warn)) $underlying.write(io.buildo.ingredients.logging.Level.Warn, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line})"
+      q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Warn, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Warn, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line})"
     }
   }
 
@@ -36,7 +42,7 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     c.Expr[Unit] {
-      q"if ($underlying.isEnabled(io.buildo.ingredients.logging.Level.Warn)) $underlying.write(io.buildo.ingredients.logging.Level.Warn, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line}, $cause)"
+      q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Warn, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Warn, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line}, $cause)"
     }
   }
 
@@ -44,7 +50,7 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     c.Expr[Unit] {
-      q"if ($underlying.isEnabled(io.buildo.ingredients.logging.Level.Info)) $underlying.write(io.buildo.ingredients.logging.Level.Info, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line})"
+      q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Info, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Info, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line})"
     }
   }
 
@@ -52,7 +58,7 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     c.Expr[Unit] {
-      q"if ($underlying.isEnabled(io.buildo.ingredients.logging.Level.Info)) $underlying.write(io.buildo.ingredients.logging.Level.Info, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line}, $cause)"
+      q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Info, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Info, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line}, $cause)"
     }
   }
 
@@ -60,7 +66,7 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     c.Expr[Unit] {
-      q"if ($underlying.isEnabled(io.buildo.ingredients.logging.Level.Debug)) $underlying.write(io.buildo.ingredients.logging.Level.Debug, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line})"
+      q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Debug, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Debug, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line})"
     }
   }
 
@@ -68,7 +74,7 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     c.Expr[Unit] {
-      q"if ($underlying.isEnabled(io.buildo.ingredients.logging.Level.Debug)) $underlying.write(io.buildo.ingredients.logging.Level.Debug, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line}, $cause)"
+      q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Debug, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Debug, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line}, $cause)"
     }
   }
 }

@@ -1,7 +1,7 @@
 package io.buildo.ingredients.logging
 
 sealed trait Underlying {
-  val isEnabled: Level => Boolean
+  val isEnabled: PartialFunction[Level, Boolean]
   def write(level: Level,
             message: String,
             fileName: String,
@@ -12,7 +12,7 @@ sealed trait Underlying {
 private sealed class UnderlyingImpl(
     val name:String,
     private val transports: Seq[Transport],
-    val isEnabled: Level => Boolean) extends Underlying {
+    val isEnabled: PartialFunction[Level, Boolean]) extends Underlying {
 
   def write(level: Level,
             message: String,
