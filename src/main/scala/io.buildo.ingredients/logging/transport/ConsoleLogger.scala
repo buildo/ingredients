@@ -13,5 +13,6 @@ class Console extends Transport {
     val today = Calendar.getInstance.getTime
     val timeString = curTimeFormat.format(today)
     println(s"[${msg.level}] [$timeString] [$name] [${msg.fileName}:${msg.line}] ${msg.message}")
+    msg.cause map (_.printStackTrace)
   }
 }
