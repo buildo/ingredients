@@ -45,5 +45,6 @@ Ingredients comes with a console log implementation, which you can use as a refe
         val today = Calendar.getInstance.getTime
         val timeString = curTimeFormat.format(today)
         println(s"[${msg.level}] [$timeString] [$name] [${msg.fileName}:${msg.line}] ${msg.message}")
+        msg.cause map (_.printStackTrace)
       }
     }
