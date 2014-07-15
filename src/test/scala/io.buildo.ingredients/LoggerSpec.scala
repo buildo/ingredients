@@ -1,14 +1,25 @@
 package io.buildo.ingredients.logging
 
-import org.mockito.Matchers._
+import org.mockito.Matchers.{ eq => eqm, _ }
 import org.mockito.Mockito._
-import org.mockito.Matchers.{ eq => eqm }
+import org.mockito.ArgumentMatcher
 import org.scalatest.{ Matchers, WordSpec }
 import org.scalatest.mock.MockitoSugar
 
 class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
 
+  class LogMessageMatcher(that: LogMessage) extends ArgumentMatcher[LogMessage] {
+    def matches(o: Any) = o match {
+      case LogMessage(level, msg, fileName, _, cause) =>
+        level == that.level &&
+        msg == that.message &&
+        fileName == that.fileName &&
+        cause == that.cause
+    }
+  }
+
   "Calling any log method" should {
+
     "never call underlying methods when no levels are enabled" in {
       val f = fixture(PartialFunction.empty)
       import f._
@@ -24,6 +35,24 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
 
       verify(underlying, never).write(any[Level], anyString, anyString, anyInt, any[Throwable])
     }
+
+    "never call write on any transport when no levels are enabled" in {
+
+      val f = fixture(PartialFunction.empty)
+      import f._
+
+      logger.debug(msg)
+      logger.debug(msg, cause)
+      logger.info(msg)
+      logger.info(msg, cause)
+      logger.warn(msg)
+      logger.warn(msg, cause)
+      logger.error(msg)
+      logger.error(msg, cause)
+
+      verify(transport, never).write(anyString, any[LogMessage])
+    }
+
   }
 
   "Calling debug with a message" should {
@@ -35,12 +64,20 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       verify(underlying).write(
         eqm(Level.Debug), // level must be Debug
         eqm(msg), // message should be msg
-        anyString, // file name can be anything
+        eqm(fileName), // file name should be fileName
         anyInt, // line can be anything
         eqm(null) // cause should be null
       )
     }
 
+    "call write on all the registered transports with Debug level when debug level is enabled" in {
+      val f = fixture({case Level.Debug => true })
+      import f._
+      logger.debug(msg)
+      val logMsg = spy(LogMessage(Level.Debug, msg, fileName, 42, None))
+      verify(transport).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
+      verify(transport2).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
+    }
   }
 
   "Calling debug with a message and a cause" should {
@@ -52,12 +89,20 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       verify(underlying).write(
         eqm(Level.Debug), // level must be Debug
         eqm(msg), // message should be msg
-        anyString, // file name can be anything
+        eqm(fileName), // file name should be fileName
         anyInt, // line can be anything
         eqm(cause) // cause should be null
       )
     }
 
+    "call write on all the registered transports with Debug level when debug level is enabled" in {
+      val f = fixture({case Level.Debug => true })
+      import f._
+      logger.debug(msg, cause)
+      val logMsg = spy(LogMessage(Level.Debug, msg, fileName, 42, Some(cause)))
+      verify(transport).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
+      verify(transport2).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
+    }
   }
 
   "Calling info with a message" should {
@@ -69,12 +114,20 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       verify(underlying).write(
         eqm(Level.Info), // level must be Info
         eqm(msg), // message should be msg
-        anyString, // file name can be anything
+        eqm(fileName), // file name should be fileName
         anyInt, // line can be anything
         eqm(null) // cause should be null
       )
     }
 
+    "call write on all the registered transports with Info level when info level is enabled" in {
+      val f = fixture({case Level.Info => true })
+      import f._
+      logger.info(msg)
+      val logMsg = spy(LogMessage(Level.Info, msg, fileName, 42, None))
+      verify(transport).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
+      verify(transport2).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
+    }
   }
 
   "Calling info with a message and a cause" should {
@@ -86,10 +139,19 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       verify(underlying).write(
         eqm(Level.Info), // level must be Info
         eqm(msg), // message should be msg
-        anyString, // file name can be anything
+        eqm(fileName), // file name should be fileName
         anyInt, // line can be anything
         eqm(cause) // cause should be null
       )
+    }
+
+    "call write on all the registered transports with Info level when info level is enabled" in {
+      val f = fixture({case Level.Info => true })
+      import f._
+      logger.info(msg, cause)
+      val logMsg = spy(LogMessage(Level.Info, msg, fileName, 42, Some(cause)))
+      verify(transport).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
+      verify(transport2).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
     }
 
   }
@@ -103,10 +165,19 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       verify(underlying).write(
         eqm(Level.Warn), // level must be Warn
         eqm(msg), // message should be msg
-        anyString, // file name can be anything
+        eqm(fileName), // file name should be fileName
         anyInt, // line can be anything
         eqm(null) // cause should be null
       )
+    }
+
+    "call write on all the registered transports with Warn level when warn level is enabled" in {
+      val f = fixture({case Level.Warn => true })
+      import f._
+      logger.warn(msg)
+      val logMsg = spy(LogMessage(Level.Warn, msg, fileName, 42, None))
+      verify(transport).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
+      verify(transport2).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
     }
 
   }
@@ -120,10 +191,19 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       verify(underlying).write(
         eqm(Level.Warn), // level must be Warn
         eqm(msg), // message should be msg
-        anyString, // file name can be anything
+        eqm(fileName), // file name should be fileName
         anyInt, // line can be anything
         eqm(cause) // cause should be null
       )
+    }
+
+    "call write on all the registered transports with Warn level when warn level is enabled" in {
+      val f = fixture({case Level.Warn => true })
+      import f._
+      logger.warn(msg, cause)
+      val logMsg = spy(LogMessage(Level.Warn, msg, fileName, 42, Some(cause)))
+      verify(transport).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
+      verify(transport2).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
     }
 
   }
@@ -143,6 +223,15 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       )
     }
 
+    "call write on all the registered transports with Error level when error level is enabled" in {
+      val f = fixture({case Level.Error => true })
+      import f._
+      logger.error(msg)
+      val logMsg = spy(LogMessage(Level.Error, msg, fileName, 42, None))
+      verify(transport).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
+      verify(transport2).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
+    }
+
   }
 
   "Calling error with a message and a cause" should {
@@ -160,6 +249,15 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       )
     }
 
+    "call write on all the registered transports with Error level when error level is enabled" in {
+      val f = fixture({case Level.Error => true })
+      import f._
+      logger.error(msg, cause)
+      val logMsg = spy(LogMessage(Level.Error, msg, fileName, 42, Some(cause)))
+      verify(transport).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
+      verify(transport2).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
+    }
+
   }
 
   def fixture(isEnabled: PartialFunction[Level, Boolean]) =
@@ -169,11 +267,11 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val cause = new RuntimeException("cause")
       val name = "logger"
 
-      val underlying = mock[Underlying]
-      when(underlying.isEnabled).thenReturn(isEnabled)
-
       val transport = mock[io.buildo.ingredients.logging.Transport]
-      val logger = spy(Logger(name, Seq(transport), PartialFunction.empty))
-      when(logger.underlying).thenReturn(underlying)
+      val transport2 = mock[io.buildo.ingredients.logging.Transport]
+
+      var underlying = spy(new UnderlyingImpl(name, Seq(transport, transport2), isEnabled))
+
+      val logger = spy(new Logger(underlying))
     }
 }
