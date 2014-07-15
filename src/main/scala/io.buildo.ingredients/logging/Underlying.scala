@@ -9,7 +9,7 @@ sealed trait Underlying {
             cause: Throwable = null)
 }
 
-private sealed class UnderlyingImpl(
+private[logging] sealed class UnderlyingImpl(
     val name:String,
     private val transports: Seq[Transport],
     val isEnabled: PartialFunction[Level, Boolean]) extends Underlying {
