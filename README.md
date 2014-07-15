@@ -13,7 +13,7 @@ Add the _buildo_ resolver and the dependency to your `build.sbt`
     resolvers += "buildo" at "https://github.com/buildo/mvn/raw/master/releases"
     libraryDependencies += "io.buildo" %% "ingredients-logging" % "0.1-SNAPSHOT"
 
-## Using Ingredients
+## Using the logger
 
     import io.buildo.ingredients.logging._
     import scala.language.experimental.macros
@@ -37,7 +37,7 @@ write a log entry
 In order to provide a custom `Transport` you have to extend the `Transport` trait
 and provide an implementation for the above method.
 
-Ingredients comes with a console log implementation, which you can use as a reference
+Ingredients logging comes with a console log implementation, which you can use as a reference
 
     class Console extends Transport {
       private val curTimeFormat = new SimpleDateFormat("HH:mm")
