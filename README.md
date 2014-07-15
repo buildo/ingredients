@@ -8,9 +8,9 @@ An unopinionated, lightweight and flexible macro-based logging library
 - Scala 2.11
 
 ## Install
-Add this to your `build.sbt`
+Add the _buildo_ resolver and the dependency to your `build.sbt`
 
-
+    resolvers += "buildo" at "https://github.com/buildo/mvn/raw/master/releases"
     libraryDependencies += "io.buildo" %% "ingredients-logging" % "0.1-SNAPSHOT"
 
 ## Using Ingredients
@@ -29,7 +29,7 @@ Add this to your `build.sbt`
     log.info("wow, such info, very important, much log")
 
 ## Defining a custom `Transport`
-The `Transport` typeclass defines a single method `write` that determines how to
+The `Transport` trait defines a single method `write` that determines how to
 write a log entry
 
     def write(name: String, logMessage: LogMessage): Unit
