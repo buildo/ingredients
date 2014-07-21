@@ -3,7 +3,7 @@ package io.buildo.ingredients.logging
 sealed trait Underlying {
   val isEnabled: PartialFunction[Level, Boolean]
   def write(level: Level,
-            message: String,
+            message: Any,
             fileName: String,
             line: Int,
             cause: Throwable = null)
@@ -15,7 +15,7 @@ private[logging] sealed class UnderlyingImpl(
     val isEnabled: PartialFunction[Level, Boolean]) extends Underlying {
 
   def write(level: Level,
-            message: String,
+            message: Any,
             fileName: String,
             line: Int,
             cause: Throwable = null): Unit = {

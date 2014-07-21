@@ -6,17 +6,17 @@ import scala.reflect.macros.blackbox.Context
 
 class Logger private[logging] (val underlying: Underlying) {
 
-  def error(message: String): Unit = macro LoggerMacro.errorMessage
-  def error(message: String, cause: Throwable): Unit = macro LoggerMacro.errorMessageCause
+  def error(message: Any): Unit = macro LoggerMacro.errorMessage
+  def error(message: Any, cause: Throwable): Unit = macro LoggerMacro.errorMessageCause
 
-  def warn(message: String): Unit = macro LoggerMacro.warnMessage
-  def warn(message: String, cause: Throwable = null): Unit = macro LoggerMacro.warnMessageCause
+  def warn(message: Any): Unit = macro LoggerMacro.warnMessage
+  def warn(message: Any, cause: Throwable = null): Unit = macro LoggerMacro.warnMessageCause
 
-  def info(message: String): Unit = macro LoggerMacro.infoMessage
-  def info(message: String, cause: Throwable = null): Unit = macro LoggerMacro.infoMessageCause
+  def info(message: Any): Unit = macro LoggerMacro.infoMessage
+  def info(message: Any, cause: Throwable = null): Unit = macro LoggerMacro.infoMessageCause
 
-  def debug(message: String): Unit = macro LoggerMacro.debugMessage
-  def debug(message: String, cause: Throwable = null): Unit = macro LoggerMacro.debugMessageCause
+  def debug(message: Any): Unit = macro LoggerMacro.debugMessage
+  def debug(message: Any, cause: Throwable = null): Unit = macro LoggerMacro.debugMessageCause
 
 }
 

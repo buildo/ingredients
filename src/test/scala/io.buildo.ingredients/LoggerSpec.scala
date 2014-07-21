@@ -18,6 +18,38 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
     }
   }
 
+  "Any value" should {
+    "be allowed as message" in {
+      val f = fixture({ case _ => true })
+      import f._
+
+      val list = List(1, 2, 3)
+      val bool = true
+      val int = 42
+      val tuple = ("hello", 37)
+
+      logger.debug(bool)
+      logger.info(int)
+      logger.warn(tuple)
+      logger.error(list)
+
+      val boolMsg = spy(LogMessage(Level.Debug, bool, fileName, 42, None))
+      val intMsg = spy(LogMessage(Level.Info, int, fileName, 42, None))
+      val tupleMsg = spy(LogMessage(Level.Warn, tuple, fileName, 42, None))
+      val listMsg = spy(LogMessage(Level.Error, list, fileName, 42, None))
+
+      verify(transport).write(eqm(name), argThat(new LogMessageMatcher(boolMsg)))
+      verify(transport).write(eqm(name), argThat(new LogMessageMatcher(intMsg)))
+      verify(transport).write(eqm(name), argThat(new LogMessageMatcher(tupleMsg)))
+      verify(transport).write(eqm(name), argThat(new LogMessageMatcher(listMsg)))
+
+      //verify(underlying).write(eqm(Level.Debug), eqm(bool.toString), anyString, anyInt, any[Throwable])
+      //verify(underlying).write(eqm(Level.Info), eqm(int.toString), anyString, anyInt, any[Throwable])
+      //verify(underlying).write(eqm(Level.Warn), eqm(tuple.toString), anyString, anyInt, any[Throwable])
+      //verify(underlying).write(eqm(Level.Error), eqm(list.toString), anyString, anyInt, any[Throwable])
+    }
+  }
+
   "Calling any log method" should {
 
     "never call underlying methods when no levels are enabled" in {

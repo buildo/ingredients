@@ -14,7 +14,7 @@ private object LoggerMacro {
     q"{ x: Level => false }"
   }
 
-  def errorMessage(c: LoggerContext)(message: c.Expr[String]) = {
+  def errorMessage(c: LoggerContext)(message: c.Expr[Any]) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     c.Expr[Unit] {
@@ -22,7 +22,7 @@ private object LoggerMacro {
     }
   }
 
-  def errorMessageCause(c: LoggerContext)(message: c.Expr[String], cause: c.Expr[Throwable]) = {
+  def errorMessageCause(c: LoggerContext)(message: c.Expr[Any], cause: c.Expr[Throwable]) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     c.Expr[Unit] {
@@ -30,7 +30,7 @@ private object LoggerMacro {
     }
   }
 
-  def warnMessage(c: LoggerContext)(message: c.Expr[String]) = {
+  def warnMessage(c: LoggerContext)(message: c.Expr[Any]) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     c.Expr[Unit] {
@@ -38,7 +38,7 @@ private object LoggerMacro {
     }
   }
 
-  def warnMessageCause(c: LoggerContext)(message: c.Expr[String], cause: c.Expr[Throwable]) = {
+  def warnMessageCause(c: LoggerContext)(message: c.Expr[Any], cause: c.Expr[Throwable]) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     c.Expr[Unit] {
@@ -46,7 +46,7 @@ private object LoggerMacro {
     }
   }
 
-  def infoMessage(c: LoggerContext)(message: c.Expr[String]) = {
+  def infoMessage(c: LoggerContext)(message: c.Expr[Any]) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     c.Expr[Unit] {
@@ -54,7 +54,7 @@ private object LoggerMacro {
     }
   }
 
-  def infoMessageCause(c: LoggerContext)(message: c.Expr[String], cause: c.Expr[Throwable]) = {
+  def infoMessageCause(c: LoggerContext)(message: c.Expr[Any], cause: c.Expr[Throwable]) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     c.Expr[Unit] {
@@ -62,7 +62,7 @@ private object LoggerMacro {
     }
   }
 
-  def debugMessage(c: LoggerContext)(message: c.Expr[String]) = {
+  def debugMessage(c: LoggerContext)(message: c.Expr[Any]) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     c.Expr[Unit] {
@@ -70,7 +70,7 @@ private object LoggerMacro {
     }
   }
 
-  def debugMessageCause(c: LoggerContext)(message: c.Expr[String], cause: c.Expr[Throwable]) = {
+  def debugMessageCause(c: LoggerContext)(message: c.Expr[Any], cause: c.Expr[Throwable]) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     c.Expr[Unit] {
