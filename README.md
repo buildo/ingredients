@@ -56,3 +56,8 @@ class Console extends Transport {
   }
 }
 ```
+## Available Transports
+
+  - [slf4j](https://github.com/buildo/ingredients-logging-slf4j-transport)
+
+If you want your custom Transport listed here, write to we@buildo.io
