@@ -61,3 +61,6 @@ class Console extends Transport {
   - [slf4j](https://github.com/buildo/ingredients-logging-slf4j-transport)
 
 If you want your custom Transport listed here, write to we@buildo.io
+
+## Credits
+Freely inspired by [scala-logging](https://github.com/typesafehub/scala-logging)
