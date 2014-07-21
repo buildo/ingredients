@@ -4,7 +4,7 @@ import scala.reflect.runtime.universe._
 import scala.language.experimental.macros
 import scala.reflect.macros.Context
 
-private[logging] class Logger (val underlying: Underlying) {
+class Logger private[logging] (val underlying: Underlying) {
 
   def error(message: String): Unit = macro LoggerMacro.errorMessage
   def error(message: String, cause: Throwable): Unit = macro LoggerMacro.errorMessageCause
