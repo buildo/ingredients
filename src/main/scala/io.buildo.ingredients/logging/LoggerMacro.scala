@@ -2,7 +2,7 @@ package io.buildo.ingredients.logging
 
 import scala.annotation.switch
 import scala.language.experimental.macros
-import scala.reflect.macros.Context
+import scala.reflect.macros.blackbox.Context
 
 private object LoggerMacro {
 

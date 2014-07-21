@@ -2,7 +2,7 @@ package io.buildo.ingredients.logging
 
 import scala.reflect.runtime.universe._
 import scala.language.experimental.macros
-import scala.reflect.macros.Context
+import scala.reflect.macros.blackbox.Context
 
 class Logger private[logging] (val underlying: Underlying) {
 
