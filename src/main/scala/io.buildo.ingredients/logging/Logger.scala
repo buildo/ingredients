@@ -10,13 +10,13 @@ class Logger private[logging] (val underlying: Underlying) {
   def error(message: Any, cause: Throwable): Unit = macro LoggerMacro.errorMessageCause
 
   def warn(message: Any): Unit = macro LoggerMacro.warnMessage
-  def warn(message: Any, cause: Throwable = null): Unit = macro LoggerMacro.warnMessageCause
+  def warn(message: Any, cause: Throwable): Unit = macro LoggerMacro.warnMessageCause
 
   def info(message: Any): Unit = macro LoggerMacro.infoMessage
-  def info(message: Any, cause: Throwable = null): Unit = macro LoggerMacro.infoMessageCause
+  def info(message: Any, cause: Throwable): Unit = macro LoggerMacro.infoMessageCause
 
   def debug(message: Any): Unit = macro LoggerMacro.debugMessage
-  def debug(message: Any, cause: Throwable = null): Unit = macro LoggerMacro.debugMessageCause
+  def debug(message: Any, cause: Throwable): Unit = macro LoggerMacro.debugMessageCause
 
 }
 
