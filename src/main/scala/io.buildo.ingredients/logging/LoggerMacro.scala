@@ -14,67 +14,51 @@ private object LoggerMacro {
     q"{ x: Level => false }"
   }
 
-  def errorMessage(c: LoggerContext)(message: c.Expr[Any]) = {
+  def errorMessage(c: LoggerContext)(message: c.Tree) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    c.Expr[Unit] {
-      q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Error, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Error, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line})"
-    }
+    q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Error, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Error, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line})"
   }
 
-  def errorMessageCause(c: LoggerContext)(message: c.Expr[Any], cause: c.Expr[Throwable]) = {
+  def errorMessageCause(c: LoggerContext)(message: c.Tree, cause: c.Tree) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    c.Expr[Unit] {
-      q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Error, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Error, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line}, $cause)"
-    }
+    q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Error, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Error, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line}, $cause)"
   }
 
-  def warnMessage(c: LoggerContext)(message: c.Expr[Any]) = {
+  def warnMessage(c: LoggerContext)(message: c.Tree) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    c.Expr[Unit] {
-      q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Warn, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Warn, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line})"
-    }
+    q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Warn, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Warn, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line})"
   }
 
-  def warnMessageCause(c: LoggerContext)(message: c.Expr[Any], cause: c.Expr[Throwable]) = {
+  def warnMessageCause(c: LoggerContext)(message: c.Tree, cause: c.Tree) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    c.Expr[Unit] {
-      q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Warn, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Warn, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line}, $cause)"
-    }
+    q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Warn, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Warn, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line}, $cause)"
   }
 
-  def infoMessage(c: LoggerContext)(message: c.Expr[Any]) = {
+  def infoMessage(c: LoggerContext)(message: c.Tree) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    c.Expr[Unit] {
-      q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Info, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Info, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line})"
-    }
+    q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Info, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Info, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line})"
   }
 
-  def infoMessageCause(c: LoggerContext)(message: c.Expr[Any], cause: c.Expr[Throwable]) = {
+  def infoMessageCause(c: LoggerContext)(message: c.Tree, cause: c.Tree) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    c.Expr[Unit] {
-      q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Info, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Info, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line}, $cause)"
-    }
+    q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Info, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Info, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line}, $cause)"
   }
 
-  def debugMessage(c: LoggerContext)(message: c.Expr[Any]) = {
+  def debugMessage(c: LoggerContext)(message: c.Tree) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    c.Expr[Unit] {
-      q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Debug, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Debug, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line})"
-    }
+    q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Debug, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Debug, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line})"
   }
 
-  def debugMessageCause(c: LoggerContext)(message: c.Expr[Any], cause: c.Expr[Throwable]) = {
+  def debugMessageCause(c: LoggerContext)(message: c.Tree, cause: c.Tree) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    c.Expr[Unit] {
-      q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Debug, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Debug, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line}, $cause)"
-    }
+    q"if ($underlying.isEnabled.applyOrElse(io.buildo.ingredients.logging.Level.Debug, ${isEnabledDefault(c)})) $underlying.write(io.buildo.ingredients.logging.Level.Debug, $message, ${c.enclosingPosition.source.toString}, ${c.enclosingPosition.line}, $cause)"
   }
 }
