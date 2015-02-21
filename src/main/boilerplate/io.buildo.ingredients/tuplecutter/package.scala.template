@@ -1,0 +1,9 @@
+package io.buildo.ingredients
+
+package object tuplecutter {
+  [1..21#implicit class TupleCutterPimp2[T##0, [#T1#]](input: Tuple2[T##0, [#T1#]]) {
+    def tail: Tuple1[[#T1#]] = Tuple1([#input._2#])
+    def head: T##0 = input._##1
+  }#
+  ]
+}
