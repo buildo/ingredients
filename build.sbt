@@ -9,7 +9,6 @@ scalaVersion  := "2.11.5"
 scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
 
 libraryDependencies ++= Seq(
-  "org.scala-lang" %  "scala-reflect" % "2.11.0",
   "org.scalatest"  %% "scalatest"     % "2.2.0" % "test"
 )
 
