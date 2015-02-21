@@ -1,6 +1,6 @@
 organization  := "io.buildo"
 
-name := "ingredients-tuple-cutter"
+name := "ingredients-tuplecutter"
 
 version       := "0.1"
 
