@@ -15,6 +15,8 @@ trait JSendJsonProtocol {
   private val successText = "success"
   private val errorText = "error"
 
+  private implicit def UnitFormat: JsonFormat[Nothing] = null
+
   implicit def JSendResponseFormat[T: JsonFormat] =
     new RootJsonFormat[JSendResponse[T]] {
       def read(json: spray.json.JsValue): JSendResponse[T] =
@@ -43,4 +45,13 @@ trait JSendJsonProtocol {
         })
 
     }
+
+  implicit def JSendSuccessFormat[T: JsonFormat]: RootJsonFormat[JSendSuccess[T]] =
+    JSendResponseFormat[T].asInstanceOf[RootJsonFormat[JSendSuccess[T]]]
+  implicit def JSendEmptySuccessFormat: RootJsonFormat[JSendEmptySuccess.type] =
+    JSendResponseFormat[Nothing].asInstanceOf[RootJsonFormat[JSendEmptySuccess.type]]
+  implicit def JSendErrorFormat: RootJsonFormat[JSendError] =
+    JSendResponseFormat[Nothing].asInstanceOf[RootJsonFormat[JSendError]]
 }
+
+object JSendJsonProtocol extends JSendJsonProtocol
