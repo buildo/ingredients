@@ -11,7 +11,7 @@ private object LoggerMacro {
   // FIXME: this should be called directly instead of being a quasi-quote
   def isEnabledDefault(c: LoggerContext) = {
     import c.universe._
-    q"{ x: _root_.io.buildo.ingredients.logging.Level => false }"
+    q"{ _: io.buildo.ingredients.logging.Level => false }"
   }
 
   def errorMessage(c: LoggerContext)(message: c.Tree) = {
