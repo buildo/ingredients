@@ -1,3 +1,7 @@
 language: scala
 scala:
   - 2.11.4
+notifications:
+    slack:
+      rooms:
+        - buildo:iVeL8b7n4t8Mkif5nJmHmsix#backends
