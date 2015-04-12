@@ -1,0 +1,11 @@
+#/usr/bin/env/sh
+set -e
+ingredients="tuplecutter"
+
+for ingredient in $ingredients
+do
+    echo "Testing ingredient: $ingredient"
+    cd $ingredient
+    sbt test
+    cd ..
+done
