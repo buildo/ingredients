@@ -4,6 +4,30 @@ import scala.reflect.runtime.universe._
 import scala.language.experimental.macros
 import scala.reflect.macros.blackbox.Context
 
+class PlainOldLogger private[logging] (val underlying: Underlying) {
+
+  def error(message: Any): Unit = underlying.write(Level.Error, message)
+  def error(message: Any, cause: Throwable): Unit = underlying.write(Level.Error, message, cause)
+
+  def warn(message: Any): Unit = underlying.write(Level.Warn, message)
+  def warn(message: Any, cause: Throwable): Unit = underlying.write(Level.Warn, message, cause)
+
+  def info(message: Any): Unit = underlying.write(Level.Info, message)
+  def info(message: Any, cause: Throwable): Unit = underlying.write(Level.Info, message, cause)
+
+  def debug(message: Any): Unit = underlying.write(Level.Debug, message)
+  def debug(message: Any, cause: Throwable): Unit = underlying.write(Level.Debug, message, cause)
+
+}
+
+object PlainOldLogger {
+  def apply(
+      name: String,
+      transports: Seq[Transport],
+      isEnabled: PartialFunction[Level, Boolean]): PlainOldLogger =
+    new PlainOldLogger(new UnderlyingImpl(name, transports, isEnabled))
+}
+
 class Logger private[logging] (val underlying: Underlying) {
 
   def error(message: Any): Unit = macro LoggerMacro.errorMessage
