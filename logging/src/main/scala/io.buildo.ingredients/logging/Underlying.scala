@@ -3,10 +3,15 @@ package io.buildo.ingredients.logging
 sealed trait Underlying {
   val isEnabled: PartialFunction[Level, Boolean]
   def write(level: Level,
+            message: Any): Unit
+  def write(level: Level,
+            message: Any,
+            cause: Throwable): Unit
+  def write(level: Level,
             message: Any,
             fileName: String,
             line: Int,
-            cause: Throwable = null)
+            cause: Throwable = null): Unit
 }
 
 private[logging] sealed class UnderlyingImpl(
@@ -14,11 +19,11 @@ private[logging] sealed class UnderlyingImpl(
     private val transports: Seq[Transport],
     val isEnabled: PartialFunction[Level, Boolean]) extends Underlying {
 
-  def write(level: Level,
+  private[this] def write(level: Level,
             message: Any,
-            fileName: String,
-            line: Int,
-            cause: Throwable = null): Unit = {
+            fileName: Option[String],
+            line: Option[Int],
+            cause: Throwable): Unit = {
     for (transport <- transports) {
       transport.write(
         name,
@@ -31,4 +36,18 @@ private[logging] sealed class UnderlyingImpl(
         ))
     }
   }
+
+  override def write(level: Level,
+                     message: Any): Unit =
+    write(level, message, None, None, null)
+  override def write(level: Level,
+                     message: Any,
+                     cause: Throwable): Unit =
+    write(level, message, None, None, cause)
+  override def write(level: Level,
+                     message: Any,
+                     fileName: String,
+                     line: Int,
+                     cause: Throwable = null): Unit =
+    write(level, message, Some(fileName), Some(line), cause)
 }

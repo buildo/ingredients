@@ -3,6 +3,6 @@ package io.buildo.ingredients.logging
 case class LogMessage(
   level: Level,
   message: Any,
-  fileName: String,
-  line: Int,
+  fileName: Option[String],
+  line: Option[Int],
   cause: Option[Throwable])
