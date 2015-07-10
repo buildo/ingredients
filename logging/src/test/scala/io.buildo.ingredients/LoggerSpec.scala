@@ -33,10 +33,10 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       logger.warn(tuple)
       logger.error(list)
 
-      val boolMsg = spy(LogMessage(Level.Debug, bool, fileName, 42, None))
-      val intMsg = spy(LogMessage(Level.Info, int, fileName, 42, None))
-      val tupleMsg = spy(LogMessage(Level.Warn, tuple, fileName, 42, None))
-      val listMsg = spy(LogMessage(Level.Error, list, fileName, 42, None))
+      val boolMsg = spy(LogMessage(Level.Debug, bool, Some(fileName), Some(42), None))
+      val intMsg = spy(LogMessage(Level.Info, int, Some(fileName), Some(42), None))
+      val tupleMsg = spy(LogMessage(Level.Warn, tuple, Some(fileName), Some(42), None))
+      val listMsg = spy(LogMessage(Level.Error, list, Some(fileName), Some(42), None))
 
       verify(transport).write(eqm(name), argThat(new LogMessageMatcher(boolMsg)))
       verify(transport).write(eqm(name), argThat(new LogMessageMatcher(intMsg)))
@@ -106,7 +106,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture({case Level.Debug => true })
       import f._
       logger.debug(msg)
-      val logMsg = spy(LogMessage(Level.Debug, msg, fileName, 42, None))
+      val logMsg = spy(LogMessage(Level.Debug, msg, Some(fileName), Some(42), None))
       verify(transport).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
       verify(transport2).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
     }
@@ -131,7 +131,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture({case Level.Debug => true })
       import f._
       logger.debug(msg, cause)
-      val logMsg = spy(LogMessage(Level.Debug, msg, fileName, 42, Some(cause)))
+      val logMsg = spy(LogMessage(Level.Debug, msg, Some(fileName), Some(42), Some(cause)))
       verify(transport).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
       verify(transport2).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
     }
@@ -156,7 +156,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture({case Level.Info => true })
       import f._
       logger.info(msg)
-      val logMsg = spy(LogMessage(Level.Info, msg, fileName, 42, None))
+      val logMsg = spy(LogMessage(Level.Info, msg, Some(fileName), Some(42), None))
       verify(transport).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
       verify(transport2).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
     }
@@ -181,7 +181,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture({case Level.Info => true })
       import f._
       logger.info(msg, cause)
-      val logMsg = spy(LogMessage(Level.Info, msg, fileName, 42, Some(cause)))
+      val logMsg = spy(LogMessage(Level.Info, msg, Some(fileName), Some(42), Some(cause)))
       verify(transport).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
       verify(transport2).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
     }
@@ -207,7 +207,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture({case Level.Warn => true })
       import f._
       logger.warn(msg)
-      val logMsg = spy(LogMessage(Level.Warn, msg, fileName, 42, None))
+      val logMsg = spy(LogMessage(Level.Warn, msg, Some(fileName), Some(42), None))
       verify(transport).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
       verify(transport2).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
     }
@@ -233,7 +233,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture({case Level.Warn => true })
       import f._
       logger.warn(msg, cause)
-      val logMsg = spy(LogMessage(Level.Warn, msg, fileName, 42, Some(cause)))
+      val logMsg = spy(LogMessage(Level.Warn, msg, Some(fileName), Some(42), Some(cause)))
       verify(transport).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
       verify(transport2).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
     }
@@ -259,7 +259,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture({case Level.Error => true })
       import f._
       logger.error(msg)
-      val logMsg = spy(LogMessage(Level.Error, msg, fileName, 42, None))
+      val logMsg = spy(LogMessage(Level.Error, msg, Some(fileName), Some(42), None))
       verify(transport).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
       verify(transport2).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
     }
@@ -285,7 +285,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture({case Level.Error => true })
       import f._
       logger.error(msg, cause)
-      val logMsg = spy(LogMessage(Level.Error, msg, fileName, 42, Some(cause)))
+      val logMsg = spy(LogMessage(Level.Error, msg, Some(fileName), Some(42), Some(cause)))
       verify(transport).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
       verify(transport2).write(eqm(name), argThat(new LogMessageMatcher(logMsg)))
     }
