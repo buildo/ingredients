@@ -3,10 +3,14 @@ package io.buildo.ingredients.logging.transport
 import io.buildo.ingredients.logging._
 
 import java.util.Calendar
+import java.util.TimeZone
 import java.text.SimpleDateFormat
 
 class Console extends Transport {
-  private val curTimeFormat = new SimpleDateFormat("HH:mm")
+  private[this] val timeZone = TimeZone.getTimeZone("UTC");
+  private[this] val curTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+  curTimeFormat.setTimeZone(timeZone);
+
   def write(
       name: String,
       msg: LogMessage): Unit = {
