@@ -12,7 +12,11 @@ class Console extends Transport {
       msg: LogMessage): Unit = {
     val today = Calendar.getInstance.getTime
     val timeString = curTimeFormat.format(today)
-    println(s"[${msg.level}] [$timeString] [$name] [${msg.fileName}:${msg.line}] ${msg.message}")
+    val fileLineSegment = (for {
+      fileName <- msg.fileName
+      line <- msg.line
+    } yield s" [${fileName}:${line}]").getOrElse("")
+    println(s"[${msg.level}] [$timeString] [$name]${fileLineSegment} ${msg.message}")
     msg.cause map (_.printStackTrace)
   }
 }
