@@ -17,14 +17,13 @@ class Console(colorized: Boolean = false) extends Transport {
       name: String,
       msg: LogMessage): Unit = {
     val today = Calendar.getInstance.getTime
-    val timeString = curTimeFormat.format(today)
+    val timeString = colored(C.BOLD, curTimeFormat.format(today))
     val fileLineSegment = (for {
       fileName <- msg.fileName
       line <- msg.line
     } yield s" [${fileName}:${line}]").getOrElse("")
-    val level = colored(C.BLUE, msg.level.toString)
-    val time = colored(C.YELLOW, timeString)
-    val nameMsg = colored(C.WHITE, name)
+    val level = colored(C.CYAN, msg.level.toString)
+    val nameMsg = colored(C.YELLOW, name)
     println(s"[$level] [$timeString] [$nameMsg]${fileLineSegment} ${msg.message}")
     msg.cause map (_.printStackTrace)
   }
