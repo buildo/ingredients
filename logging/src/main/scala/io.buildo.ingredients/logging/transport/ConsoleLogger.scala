@@ -6,9 +6,11 @@ import java.util.Calendar
 import java.util.TimeZone
 import java.text.SimpleDateFormat
 
-class Console extends Transport {
+import scala.{Console => C}
+
+class Console(colorized: Boolean = false) extends Transport {
   private[this] val timeZone = TimeZone.getTimeZone("UTC");
-  private[this] val curTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+  private[this] val curTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
   curTimeFormat.setTimeZone(timeZone);
 
   def write(
@@ -20,7 +22,11 @@ class Console extends Transport {
       fileName <- msg.fileName
       line <- msg.line
     } yield s" [${fileName}:${line}]").getOrElse("")
-    println(s"[${msg.level}] [$timeString] [$name]${fileLineSegment} ${msg.message}")
+    if (colorized) {
+      println(s"[${C.BLUE}${msg.level}${C.RESET}] [${C.WHITE}$timeString${C.RESET}] [${C.YELLOW}$name${C.RESET}]${fileLineSegment} ${msg.message}")
+    } else {
+      println(s"[${msg.level}] [$timeString] [$name]${fileLineSegment} ${msg.message}")
+    }
     msg.cause map (_.printStackTrace)
   }
 }
