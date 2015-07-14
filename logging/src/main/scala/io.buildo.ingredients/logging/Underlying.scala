@@ -1,7 +1,7 @@
 package io.buildo.ingredients.logging
 
 sealed trait Underlying {
-  val isEnabled: PartialFunction[Level, Boolean]
+  val isEnabled: Map[Level, Boolean]
   def write(level: Level,
             message: Any): Unit
   def write(level: Level,
@@ -17,7 +17,7 @@ sealed trait Underlying {
 private[logging] sealed class UnderlyingImpl(
     val name:String,
     private val transports: Seq[Transport],
-    val isEnabled: PartialFunction[Level, Boolean]) extends Underlying {
+    isEnabledParam: PartialFunction[Level, Boolean]) extends Underlying {
 
   private[this] def write(level: Level,
             message: Any,
@@ -50,4 +50,9 @@ private[logging] sealed class UnderlyingImpl(
                      line: Int,
                      cause: Throwable = null): Unit =
     write(level, message, Some(fileName), Some(line), cause)
+
+  override val isEnabled =
+    SealedDescendants.values[Level].toList.map { l =>
+      l -> isEnabledParam.applyOrElse(l, (_: Level) => false)
+    }.toMap
 }
