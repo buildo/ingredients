@@ -16,13 +16,13 @@ object IngredientsBuild extends Build {
     publishTo := Some(Resolver.file("file", new File("releases")))
   )
 
-  lazy val jsend = project
+  lazy val jsend = project.in(file("jsend"))
     .settings(commonSettings: _*)
 
-  lazy val logging = project
+  lazy val logging = project.in(file("logging"))
     .settings(commonSettings: _*)
 
-  lazy val tuplecutter = project
+  lazy val tuplecutter = project.in(file("tuplecutter"))
     .settings(commonSettings: _*)
 
   lazy val root = project.in(file("."))
