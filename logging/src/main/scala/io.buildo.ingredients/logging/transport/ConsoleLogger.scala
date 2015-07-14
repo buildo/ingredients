@@ -22,11 +22,13 @@ class Console(colorized: Boolean = false) extends Transport {
       fileName <- msg.fileName
       line <- msg.line
     } yield s" [${fileName}:${line}]").getOrElse("")
-    if (colorized) {
-      println(s"[${C.BLUE}${msg.level}${C.RESET}] [${C.WHITE}$timeString${C.RESET}] [${C.YELLOW}$name${C.RESET}]${fileLineSegment} ${msg.message}")
-    } else {
-      println(s"[${msg.level}] [$timeString] [$name]${fileLineSegment} ${msg.message}")
-    }
+    val level = colored(C.BLUE, msg.level)
+    val time = colored(C.YELLOW, timeString)
+    val nameMsg = colored(C.WHITE, name)
+    println(s"[$level] [$timeString] [$nameMsg]${fileLineSegment} ${msg.message}")
     msg.cause map (_.printStackTrace)
   }
+
+  private def colored(color: String, s: String) = if (colorized) s"$color$s${C.RESET}" else s
+
 }
