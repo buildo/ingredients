@@ -1,6 +1,6 @@
 name := "ingredients-logging"
 
-version       := "0.5"
+version       := "0.5.2"
 
 libraryDependencies <+= (scalaVersion) { sv =>
   "org.scala-lang" %  "scala-reflect" % sv

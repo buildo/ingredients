@@ -21,10 +21,14 @@ object IngredientsBuild extends Build {
 
   lazy val logging = project.in(file("logging"))
     .settings(commonSettings: _*)
-    .dependsOn(loggingMacro)
+    .dependsOn(loggingMacro % "compile-internal, test-internal")
 
   lazy val loggingMacro = project.in(file("logging/macro"))
     .settings(commonSettings: _*)
+    .settings(
+      publish := (),
+      publishLocal := ()
+    )
 
   lazy val tuplecutter = project.in(file("tuplecutter"))
     .settings(commonSettings: _*)
