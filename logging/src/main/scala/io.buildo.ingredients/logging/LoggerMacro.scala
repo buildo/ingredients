@@ -8,12 +8,6 @@ private object LoggerMacro {
 
   type LoggerContext = Context
 
-  // FIXME: this should be called directly instead of being a quasi-quote
-  def isEnabledDefault(c: LoggerContext) = {
-    import c.universe._
-    q"{ _: io.buildo.ingredients.logging.Level => false }"
-  }
-
   def errorMessage(c: LoggerContext)(message: c.Tree) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
