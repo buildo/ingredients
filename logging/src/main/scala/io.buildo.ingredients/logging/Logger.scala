@@ -1,4 +1,4 @@
-package io.buildo.ingredients.logging
+package ingredients.logging
 
 import scala.reflect.runtime.universe._
 import scala.language.experimental.macros

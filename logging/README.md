@@ -1,18 +1,19 @@
 # Ingredients Logging
-An unopinionated, lightweight and flexible macro-based logging library
 
-![](http://i.imgur.com/P5oynmA.jpg)
+[ ![Download](https://api.bintray.com/packages/buildo/maven/ingredients-logging/images/download.svg) ](https://bintray.com/buildo/maven/ingredients-logging/_latestVersion)
+
+An unopinionated, lightweight and flexible macro-based logging library
 
 ## Prerequisites
 
 - Scala 2.11
 
 ## Install
-Add the _buildo_ resolver and the dependency to your `build.sbt`
+Add the buildo/maven Bintray resolver and the dependency to your `build.sbt`
 
 ```scala
-resolvers += "buildo" at "https://github.com/buildo/mvn/raw/master/releases"
-libraryDependencies += "io.buildo" %% "ingredients-logging" % "0.4"
+resolvers += "bintray buildo/maven" at "http://dl.bintray.com/buildo/maven"
+libraryDependencies += "io.buildo" %% "ingredients-logging" % "..."
 ```
 
 ## Using the logger

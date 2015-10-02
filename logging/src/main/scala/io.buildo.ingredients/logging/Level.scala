@@ -1,4 +1,4 @@
-package io.buildo.ingredients.logging
+package ingredients.logging
 
 sealed abstract class Level(val name: String)
 

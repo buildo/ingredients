@@ -1,6 +1,6 @@
-package io.buildo.ingredients.logging.transport
+package ingredients.logging.transport
 
-import io.buildo.ingredients.logging._
+import ingredients.logging._
 
 import java.util.Calendar
 import java.util.TimeZone

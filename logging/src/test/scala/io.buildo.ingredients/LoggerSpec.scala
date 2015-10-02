@@ -1,4 +1,4 @@
-package io.buildo.ingredients.logging
+package ingredients.logging
 
 import org.mockito.Matchers.{ eq => eqm, _ }
 import org.mockito.Mockito._
@@ -299,8 +299,8 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val cause = new RuntimeException("cause")
       val name = "logger"
 
-      val transport = mock[io.buildo.ingredients.logging.Transport]
-      val transport2 = mock[io.buildo.ingredients.logging.Transport]
+      val transport = mock[ingredients.logging.Transport]
+      val transport2 = mock[ingredients.logging.Transport]
 
       var underlying = spy(new UnderlyingImpl(name, Seq(transport, transport2), isEnabled))
 

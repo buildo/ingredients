@@ -1,4 +1,4 @@
-package io.buildo.ingredients.logging
+package ingredients.logging
 
 trait Transport {
   def write(
