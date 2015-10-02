@@ -1,4 +1,7 @@
 # Ingredients Logging
+
+[ ![Download](https://api.bintray.com/packages/buildo/maven/ingredients-logging/images/download.svg) ](https://bintray.com/buildo/maven/ingredients-logging/_latestVersion)
+
 An unopinionated, lightweight and flexible macro-based logging library
 
 ![](http://i.imgur.com/P5oynmA.jpg)

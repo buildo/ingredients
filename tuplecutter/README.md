@@ -1,4 +1,7 @@
 # Ingredients Tuplecutter
+
+[ ![Download](https://api.bintray.com/packages/buildo/maven/ingredients-tuplecutter/images/download.svg) ](https://bintray.com/buildo/maven/ingredients-tuplecutter/_latestVersion)
+
 Heads and tails for your tuples
 
 _"It's easy to use"_ -- Daniele Gallingani
