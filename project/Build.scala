@@ -1,19 +1,23 @@
 import sbt._
 import Keys._
+import bintray.BintrayKeys._
 
 object IngredientsBuild extends Build {
   lazy val commonSettings = seq(
     organization  := "io.buildo",
     scalaVersion  := "2.11.7",
     resolvers ++= Seq(
-      "buildo mvn" at "https://raw.github.com/buildo/mvn/master/releases"
+      "buildo mvn" at "https://raw.github.com/buildo/mvn/master/releases",
+      Resolver.jcenterRepo
     ),
     scalacOptions := Seq(
       "-unchecked",
       "-deprecation",
       "-encoding",
       "utf8"),
-    publishTo := Some(Resolver.file("file", new File("releases")))
+    licenses += ("MIT", url("http://opensource.org/licenses/MIT")),
+    bintrayOrganization := Some("buildo"),
+    bintrayReleaseOnPublish in ThisBuild := false
   )
 
   lazy val jsend = project.in(file("jsend"))
