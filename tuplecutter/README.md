@@ -23,5 +23,5 @@ Add the _buildo_ resolver and the dependency to your `build.sbt`
 ```scala
 resolvers += "buildo" at "https://github.com/buildo/mvn/raw/master/releases"
 
-libraryDependencies += "io.buildo" %% "ingredients-tuplecutter" % "0.1.1"
+libraryDependencies += "io.buildo" %% "ingredients-tuplecutter" % "..."
 ```

@@ -4,8 +4,6 @@
 
 An unopinionated, lightweight and flexible macro-based logging library
 
-![](http://i.imgur.com/P5oynmA.jpg)
-
 ## Prerequisites
 
 - Scala 2.11
@@ -15,7 +13,7 @@ Add the _buildo_ resolver and the dependency to your `build.sbt`
 
 ```scala
 resolvers += "buildo" at "https://github.com/buildo/mvn/raw/master/releases"
-libraryDependencies += "io.buildo" %% "ingredients-logging" % "0.4"
+libraryDependencies += "io.buildo" %% "ingredients-logging" % "..."
 ```
 
 ## Using the logger
