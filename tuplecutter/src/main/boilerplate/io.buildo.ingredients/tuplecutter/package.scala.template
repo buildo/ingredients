@@ -1,4 +1,4 @@
-package io.buildo.ingredients
+package ingredients
 
 package object tuplecutter {
   [1..21#implicit class TupleCutterPimp2[T##0, [#T1#]](input: Tuple2[T##0, [#T1#]]) {
