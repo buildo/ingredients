@@ -1,4 +1,4 @@
-package io.buildo.ingredients
+package ingredients
 
 package jsend {
   trait JSendSingular[T] { val singularName: String }

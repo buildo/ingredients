@@ -1,4 +1,4 @@
-package io.buildo.ingredients.jsend
+package ingredients.jsend
 
 import org.scalatest.{ Matchers, WordSpec }
 import spray.json._

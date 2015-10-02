@@ -1,6 +1,6 @@
 // Adapted from http://stackoverflow.com/a/13672520/123984
 //
-package io.buildo.ingredients.logging
+package ingredients.logging
 
 import language.experimental.macros
 import scala.reflect.macros.blackbox.Context

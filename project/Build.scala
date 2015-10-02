@@ -4,7 +4,7 @@ import Keys._
 object IngredientsBuild extends Build {
   lazy val commonSettings = seq(
     organization  := "io.buildo",
-    scalaVersion  := "2.11.6",
+    scalaVersion  := "2.11.7",
     resolvers ++= Seq(
       "buildo mvn" at "https://raw.github.com/buildo/mvn/master/releases"
     ),

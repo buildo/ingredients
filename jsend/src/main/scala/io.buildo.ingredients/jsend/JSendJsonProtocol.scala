@@ -1,4 +1,4 @@
-package io.buildo.ingredients.jsend
+package ingredients.jsend
 
 import spray.json._
 

@@ -1,4 +1,4 @@
-package io.buildo.ingredients.logging
+package ingredients.logging
 
 sealed trait Underlying {
   val isEnabled: Map[Level, Boolean]

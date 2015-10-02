@@ -1,4 +1,4 @@
-package io.buildo.ingredients.tuplecutter
+package ingredients.tuplecutter
 
 import org.scalatest.{ Matchers, WordSpec }
 
