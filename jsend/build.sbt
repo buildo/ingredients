@@ -1,6 +1,6 @@
 name := "ingredients-jsend"
 
-version       := "0.4.0"
+version       := "0.4.1-SNAPSHOT"
 
 libraryDependencies ++= Seq(
   "io.buildo"      %% "spray-autoproductformat" % "0.2",
