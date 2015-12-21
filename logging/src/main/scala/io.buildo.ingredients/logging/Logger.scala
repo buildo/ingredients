@@ -6,17 +6,27 @@ import scala.reflect.macros.blackbox.Context
 
 class PlainOldLogger private[logging] (val underlying: Underlying) {
 
-  def error(message: Any): Unit = underlying.write(Level.Error, message)
-  def error(message: Any, cause: Throwable): Unit = underlying.write(Level.Error, message, cause)
+  def error(message: Any): Unit = write(Level.Error, message)
+  def error(message: Any, cause: Throwable): Unit = write(Level.Error, message, cause)
 
-  def warn(message: Any): Unit = underlying.write(Level.Warn, message)
-  def warn(message: Any, cause: Throwable): Unit = underlying.write(Level.Warn, message, cause)
+  def warn(message: Any): Unit = write(Level.Warn, message)
+  def warn(message: Any, cause: Throwable): Unit = write(Level.Warn, message, cause)
 
-  def info(message: Any): Unit = underlying.write(Level.Info, message)
-  def info(message: Any, cause: Throwable): Unit = underlying.write(Level.Info, message, cause)
+  def info(message: Any): Unit = write(Level.Info, message)
+  def info(message: Any, cause: Throwable): Unit = write(Level.Info, message, cause)
 
-  def debug(message: Any): Unit = underlying.write(Level.Debug, message)
-  def debug(message: Any, cause: Throwable): Unit = underlying.write(Level.Debug, message, cause)
+  def debug(message: Any): Unit = write(Level.Debug, message)
+  def debug(message: Any, cause: Throwable): Unit = write(Level.Debug, message, cause)
+
+  private def write(level: Level, message: Any): Unit =
+    if (underlying.isEnabled(level)) {
+      underlying.write(level, message)
+    }
+
+  private def write(level: Level, message: Any, cause: Throwable): Unit =
+    if (underlying.isEnabled(level)) {
+      underlying.write(level, message, cause)
+    }
 
 }
 
