@@ -37,8 +37,11 @@ object IngredientsBuild extends Build {
   lazy val tuplecutter = project.in(file("tuplecutter"))
     .settings(commonSettings: _*)
 
+  lazy val caseenum = project.in(file("caseenum"))
+    .settings(commonSettings: _*)
+
   lazy val root = project.in(file("."))
-    .aggregate(jsend, logging, tuplecutter)
+    .aggregate(jsend, logging, tuplecutter, caseenum)
     .settings(
       publish := {}
     )
