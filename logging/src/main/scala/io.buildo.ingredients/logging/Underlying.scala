@@ -1,5 +1,7 @@
 package ingredients.logging
 
+import com.pellucid.sealerate
+
 sealed trait Underlying {
   val isEnabled: Map[Level, Boolean]
   def write(level: Level,
@@ -52,7 +54,7 @@ private[logging] sealed class UnderlyingImpl(
     write(level, message, Some(fileName), Some(line), cause)
 
   override val isEnabled =
-    SealedDescendants.values[Level].toList.map { l =>
+    sealerate.values[Level].toList.map { l =>
       l -> isEnabledParam.applyOrElse(l, (_: Level) => false)
     }.toMap
 }
