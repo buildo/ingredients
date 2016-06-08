@@ -49,7 +49,9 @@ object EnumMacro {
           c.abort(c.enclosingPosition, "Annotation is only supported on objects")
       }
       val members = body.map {
-        case q"object $memberName { ..$more }" =>
+        case Ident(memberName: TermName) =>
+          q"case object $memberName extends $enumName"
+        case q"object $memberName { ..$more  }" =>
           q"case object $memberName extends $enumName"
         case _ =>
           c.abort(c.enclosingPosition, "Enum members should be plain objects")
@@ -116,9 +118,13 @@ object IndexedEnumMacro {
       }
       val typeAliasTree :: memberTrees = body
       val members = memberTrees.map {
-        case q"object $memberName { $statement }" =>
+        case Apply(Ident(memberName: TermName), List(expression)) =>
           q"""case object $memberName extends $enumName {
-                val index = $statement
+                val index = $expression
+              }"""
+        case q"object $memberName { $expression  }" =>
+          q"""case object $memberName extends $enumName {
+                val index = $expression
               }"""
         case _ =>
           c.abort(c.enclosingPosition, "Enum members should be plain objects")
