@@ -5,7 +5,8 @@ import bintray.BintrayKeys._
 object IngredientsBuild extends Build {
   lazy val commonSettings = seq(
     organization  := "io.buildo",
-    scalaVersion  := "2.11.7",
+    scalaVersion  := "2.11.8",
+    crossScalaVersions := Seq("2.11.8", "2.12.1"),
     resolvers ++= Seq(
       "buildo mvn" at "https://raw.github.com/buildo/mvn/master/releases",
       Resolver.jcenterRepo
@@ -17,7 +18,7 @@ object IngredientsBuild extends Build {
       "utf8"),
     licenses += ("MIT", url("http://opensource.org/licenses/MIT")),
     bintrayOrganization := Some("buildo"),
-    bintrayReleaseOnPublish in ThisBuild := false
+    bintrayReleaseOnPublish in ThisBuild := true
   )
 
   lazy val jsend = project.in(file("jsend"))
@@ -39,6 +40,10 @@ object IngredientsBuild extends Build {
 
   lazy val caseenum = project.in(file("caseenum"))
     .settings(commonSettings: _*)
+
+  lazy val caseenumCirceSupport = project.in(file("caseenum/circeSupport"))
+    .settings(commonSettings: _*)
+    .dependsOn(caseenum)
 
   lazy val root = project.in(file("."))
     .aggregate(jsend, logging, tuplecutter, caseenum)
