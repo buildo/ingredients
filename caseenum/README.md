@@ -1,3 +1,9 @@
+# MIGRATED TO https://github.com/buildo/enumero
+
+
+---
+
+
 # Ingredients CaseEnum
 
 [ ![Download](https://api.bintray.com/packages/buildo/maven/ingredients-caseenum/images/download.svg) ](https://bintray.com/buildo/maven/ingredients-caseenum/_latestVersion)
